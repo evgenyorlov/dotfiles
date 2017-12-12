@@ -1,0 +1,64 @@
+[user]
+    name = Evgeny Orlov
+    email = eugene.a.orlov@gmail.com
+    # Посмотреть про опцию signingkey    
+
+[github]
+    user = evgenyorlov
+
+[core]
+    editor = vim
+    pager = less
+    excludesfile = ~/.gitignore_global
+    # Show unicode characters in filenames
+    # quotepath          = false 
+
+[diff]
+    tool = vimdiff
+
+[credential]
+    helper = cache --timeout=3600
+
+[push]
+    default = upstream
+
+[color]
+	ui = auto
+
+[format]
+    pretty = fuller
+
+[pretty]
+	line = "%C(auto)%h%d %s %C(yellow)by %C(blue)%an %C(green)%ar"
+	compact = "%C(auto)%h %s %C(green)%ar%n %C(auto)%d%n"
+    detail = "%C(auto)%h %s%n %C(yellow)by %C(blue)%an %C(magenta)<%ae> [%G?] %C(green)%ar%n %C(auto)%d%n"
+
+[advice]
+    # Enable advice for beginners for now
+    pushNonFastForward = true
+    pushNonFFCurrent   = true
+    pushNonFFDefault   = true
+    pushNonFFMatching  = true
+    statusHints        = true
+    commitBeforeMerge  = true
+    resolveConflict    = true
+    implicitIdentity   = true
+    detachedHead       = true
+    amWorkDir          = true
+
+[grep]
+    lineNumber = true
+
+[alias]
+    st = status -sb
+    lg = log --pretty=oneline --abbrev-commit --graph --decorate
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    alias = "!git config -l | grep alias | cut -c 7-"
+
+# [rebase]
+    # Allow rebase with unstaged changes
+    # autoStash = true
+
+# Allow local customizations in the .gitconfig_local file
+[include]
+    path = ~/.gitconfig_local
