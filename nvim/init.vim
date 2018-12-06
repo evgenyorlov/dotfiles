@@ -34,10 +34,10 @@ Plug 'davidhalter/jedi-vim'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 Plug 'tpope/vim-repeat'
-
 Plug 'tpope/vim-commentary'
-
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
+
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'sheerun/vim-polyglot'
@@ -55,18 +55,22 @@ Plug 'chrisbra/NrrwRgn'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-Plug 'lyokha/vim-xkbswitch'
+Plug 'tmhedberg/SimpylFold'
+
+Plug 'christoomey/vim-tmux-navigator'
+
+" TODO fork and amend the plugin to support on-premise bitbucket deployments
+" Plug 'tommcdo/vim-fubitive'
 
 " On-demand plugins
 
-Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 " TODO with this plugin NerdTree lags too much!
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on':  'NERDTreeToggle' }
 
-" TODO doesn't work with Semshi
-" Plug 'tmhedberg/SimpylFold'
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+
 
 " TODO consider these plugins
 " https://github.com/majutsushi/tagbar
@@ -85,6 +89,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on':  'NERDTreeToggle' }
 " Plug 'kana/vim-textobj-user'
 " Plug 'lucapette/vim-textobj-underscore'
 " Plug 'vim-scripts/argtextobj.vim'
+" https://github.com/svermeulen/vim-easyclip
 
 " Always load the vim-devicons as the very last one.
 Plug 'ryanoasis/vim-devicons'
@@ -99,7 +104,8 @@ let g:python3_host_prog = '/Users/eaorlov/.pyenv/versions/neovim3/bin/python'
 
 filetype plugin indent on
 
-set encoding=utf-8
+set encoding=utf-8  " The encoding displayed.
+set fileencoding=utf-8  " The encoding written to file.
 
 " russian language support
 " set keymap=russian-jcukenwin
@@ -108,13 +114,12 @@ set encoding=utf-8
 
 " enable true colors in terminal
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 set termguicolors
 " syntax highlighting
 syntax on
-" numbers of lines
-set number
 " solarized scheme options
-set background=dark
+" set background=dark
 colorscheme NeoSolarized
 " default value is "normal", Setting this option to "high" or "low" does use the 
 " same Solarized palette but simply shifts some values up or down in order to 
@@ -147,6 +152,8 @@ set mouse=a
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
+" set autochdir
+
 " indenting
 set autoindent
 set expandtab
@@ -163,13 +170,28 @@ set incsearch
 set ignorecase
 set smartcase
 
+" keep all undos between vim sessions
+set undofile
+set undodir="$HOME/.VIM_UNDO_FILES"
+
+" Remember cursor position between vim sessions
+if has("autocmd")
+    au BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
+            " center buffer around cursor when opening files
+endif
+autocmd BufRead * normal zz
+
 " NerdTree to show hidden files
 let g:NERDSpaceDelims=1
+let g:NERDTreeChDirMode=2
 " Make nerdtree look nice
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 30
-let NERDTreeIgnore = ['\.DS_Store$', '\.pyc$', '\.javac']
+let g:NERDTreeIgnore = ['\.DS_Store$', '\.pyc$', '\.javac']
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 0
 
@@ -178,7 +200,6 @@ let g:NERDTreeSyntaxDisableDefaultExtensions = 1
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeSyntaxEnabledExtensions = ['bmp', 'c', 'h', 'c++', 'cpp', 'ini', 'jpg', 'jpeg', 'gif', 'markdown', 'md', 'png', 'py', 'pyd', 'pyo', 'sh', 'sql', 'vim', 'yml']
-
 
 " devicons options
 " set guifont=Roboto\ Mono\ Nerd\ Font\ Complete:h12
@@ -219,9 +240,9 @@ let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutFastWrap = ''
 let g:AutoPairsShortcutJump = ''
 
-" airline options 
+" airline optionS
 let g:airline_theme='solarized'
-let g:airline_solarized_bg='dark'
+let g:airline_solarized_bg='light'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -230,6 +251,9 @@ let g:airline_powerline_fonts = 1
 
 " remap leader key
 let mapleader=" "
+
+" let's remap : -> ; in order not to press Shift every time
+nnoremap ; :
 
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -244,12 +268,14 @@ nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
 
 " fzf options
-nmap ; :Buffers<CR>
-nmap <Leader>t :Files<CR>
-nmap <Leader>r :Tags<CR>
+nmap <Leader>; :Buffers<CR>
+nmap <Leader>t :GFiles<CR>
+nmap <Leader>T :Tags<CR>
 
 " Fugitive options
 let g:fugitive_git_executable = 'LANG=ru_RU.UTF-8 git'
+" let g:fugitive_bitbucket_domains = ['http://bitbucket.sberned.ru'] 
+" let g:fugitive_browse_handlers = 
 
 " GitGutter options
 " TODO choose suitable utf-8 symbols
@@ -273,39 +299,12 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '?'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let b:ale_linters = {'python': ['flake8', 'pylint']}
+let g:ale_linters = {'python': ['flake8']}
 let g:ale_fixers = {
 \   'python': ['black', 'isort', 'remove_trailing_lines'],
 \}
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
-
-" deoplete options
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#sources#jedi#server_timeout = 10
-let g:deoplete#sources#jedi#statement_length = 50
-let g:deoplete#sources#jedi#enable_cache = 1
-let g:deoplete#sources#jedi#show_docstring = 0
-" complete with words from any opened file
-let g:context_filetype#same_filetypes = {}
-let g:context_filetype#same_filetypes._ = '_'
-" TODO make jumping outside project directory work 
-" let g:deoplete#sources#jedi#extra_path = 
-" jedi options
-" Disable autocompletion (using deoplete instead)
-let g:jedi#completions_enabled = 0
-" Go to definition
-let g:jedi#goto_command = "<leader>d"
-" Find assignments
-let g:jedi#goto_assignments_command = "<leader>a"
-let g:jedi#documentation_command = "K"
-" Find ocurrences
-let g:jedi#usages_command = "<leader>n"
-" TODO couldn't make any other combination work
-let g:jedi#completions_command = "<C-N>"
-let g:jedi#rename_command = "<leader>r"
 
 " Pythonsense options
 map <buffer> ac <Plug>(PythonsenseOuterClassTextObject)
@@ -386,7 +385,41 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " toggle relative numbering
+set relativenumber number
 nnoremap <F4> :set relativenumber!<CR>
 
 " toggle NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <leader>` :NERDTreeToggle<CR>
+nnoremap <leader><leader>` :NERDTree .<CR>
+
+" deoplete options
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#sources#jedi#server_timeout = 10
+let g:deoplete#sources#jedi#statement_length = 50
+let g:deoplete#sources#jedi#enable_cache = 1
+let g:deoplete#sources#jedi#show_docstring = 0
+" complete with words from any opened file
+let g:context_filetype#same_filetypes = {}
+let g:context_filetype#same_filetypes._ = '_'
+" TODO make jumping outside project directory work 
+" let g:deoplete#sources#jedi#extra_path = 
+" jedi options
+" Disable autocompletion (using deoplete instead)
+let g:jedi#completions_enabled = 0
+" Go to definition
+let g:jedi#goto_command = "<Leader>d"
+" Find assignments
+let g:jedi#goto_assignments_command = "<Leader>a"
+let g:jedi#documentation_command = "K"
+" Find ocurrences
+let g:jedi#usages_command = "<Leader>n"
+" TODO couldn't make any other combination work
+let g:jedi#completions_command = "<C-N>"
+let g:jedi#rename_command = "<Leader>r"
+" Overwriting Semshi color highlights for better readability
+function MyCustomHighlights()
+    hi semshiUnresolved      ctermfg=226 guifg=#666600 cterm=underline gui=underline
+endfunction
+autocmd FileType python call MyCustomHighlights()
