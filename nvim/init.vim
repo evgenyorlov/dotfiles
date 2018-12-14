@@ -33,6 +33,9 @@ Plug 'davidhalter/jedi-vim'
 
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
+" Use TAB for code completion 
+Plug 'ervandew/supertab'
+
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
@@ -47,6 +50,7 @@ Plug 'yuttie/comfortable-motion.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'wellle/targets.vim'
+" https://github.com/wellle/targets.vim/blob/master/cheatsheet.md
 
 Plug 'easymotion/vim-easymotion'
 
@@ -65,9 +69,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " On-demand plugins
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+" Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 " TODO with this plugin NerdTree lags too much!
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on':  'NERDTreeToggle' }
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on':  'NERDTreeToggle' }
 
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 
@@ -278,13 +282,6 @@ let g:fugitive_git_executable = 'LANG=ru_RU.UTF-8 git'
 " let g:fugitive_browse_handlers = 
 
 " GitGutter options
-" TODO choose suitable utf-8 symbols
-" let g:gitgutter_sign_added = '✙'
-" let g:gitgutter_sign_modified = '✎'
-" let g:gitgutter_sign_removed = '✄'
-" let g:gitgutter_sign_removed_first_line = '^^'
-" let g:gitgutter_sign_modified_removed = 'ww'
-" let g:gitgutter_highlight_lines = 0
 nmap ]h <Plug>GitGutterNextHunk
 nmap [h <Plug>GitGutterPrevHunk
 nmap <Leader>ha <Plug>GitGutterStageHunk
@@ -298,6 +295,12 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 " ALE options
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '?'
+" highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
+" hi link ALEErrorSign base00 
+" hi link ALEWarningSign base00
+
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_linters = {'python': ['flake8']}
 let g:ale_fixers = {
@@ -305,6 +308,7 @@ let g:ale_fixers = {
 \}
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
+
 
 " Pythonsense options
 map <buffer> ac <Plug>(PythonsenseOuterClassTextObject)
@@ -328,7 +332,7 @@ map <buffer> g: <Plug>(PythonsensePyWhere)
 " easymotion options
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " <Leader>f{char} to move to {char}
-map  s <Plug>(easymotion-bd-f)
+map s <Plug>(easymotion-bd-f)
 nmap s <Plug>(easymotion-overwin-f)
 " s{char}{char} to move to {char}{char}
 map <Leader>f <Plug>(easymotion-bd-f2)
@@ -418,6 +422,8 @@ let g:jedi#usages_command = "<Leader>n"
 " TODO couldn't make any other combination work
 let g:jedi#completions_command = "<C-N>"
 let g:jedi#rename_command = "<Leader>r"
+" Semshi options
+" let g:semshi#update_delay_factor = 0.0001
 " Overwriting Semshi color highlights for better readability
 function MyCustomHighlights()
     hi semshiUnresolved      ctermfg=226 guifg=#666600 cterm=underline gui=underline

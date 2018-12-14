@@ -206,10 +206,27 @@ export EDITOR='nvim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+
+# Configs
 alias zshconfig="nvim ~/.zshrc"
 alias nvimconfig="nvim ~/.config/nvim/init.vim"
 alias tmuxconfig="nvim ~/.tmux.conf"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+
+# DB 
+alias db_projectx="pgcli -h prx.domclick.ru -p 20000 -U eaorlov -w -d projectx"
+alias db_lcp="pgcli -h central.dev.cloud.vs -p 5456 -U lcp_user -w -d lcp"
+
+# vim
+alias vim="nvim"
+alias vi="nvim"
+alias v="nvim"
+
+# docker
+alias dps="docker ps"
+
+# nvidia
+alias ns="nvidia-smi"
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -218,12 +235,5 @@ eval "$(pyenv virtualenv-init -)"
 export PGPASSFILE='/Users/eaorlov/.pgpass'
 
 source ~/.iterm2_shell_integration.zsh
-
-# aliases
-alias projectx="pgcli -h prx.domclick.ru -p 20000 -U eaorlov -w -d projectx"
-alias lcp="pgcli -h central.dev.cloud.vs -p 5456 -U lcp_user -w -d lcp"
-alias vim="nvim"
-alias vi="nvim"
-alias v="nvim"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
