@@ -26,11 +26,11 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'dense-analysis/ale'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-" Just to add the python go-to-definition and similar features, autocompletion
-" from this plugin is disabled
-Plug 'davidhalter/jedi-vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-jedi'
+" " Just to add the python go-to-definition and similar features, autocompletion
+" " from this plugin is disabled
+" Plug 'davidhalter/jedi-vim'
 
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
@@ -429,32 +429,53 @@ nnoremap <F4> :set relativenumber!<CR>
 map <leader>` :NERDTreeToggle<CR>
 nnoremap <leader><leader>` :NERDTree .<CR>
 
+" Kite options
+
+" Line-of-Code Completions
+" Tab completion
+let g:kite_tab_complete=1
+" To see documentation in the preview window for each completion option
+" set completeopt+=preview
+" To have the preview window automatically closed once a completion has been inserted
+" utocmd CompleteDone * if !pumvisible() | pclose | endif
+
+" Intelligent Snippets
+let g:kite_next_placeholder = "<C-N>"
+
+" Kite Copilot for Python Documentation
+nmap <silent> <buffer> gK <Plug>(kite-docs)
+" let g:kite_documentation_continual=1
+
+" Statusline
+" set statusline=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
+" set laststatus=2  " always display the status line
+
 " deoplete options
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#sources#jedi#server_timeout = 10
-let g:deoplete#sources#jedi#statement_length = 50
-let g:deoplete#sources#jedi#enable_cache = 1
-let g:deoplete#sources#jedi#show_docstring = 0
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_ignore_case = 1
+" let g:deoplete#enable_smart_case = 1
+" let g:deoplete#sources#jedi#server_timeout = 10
+" let g:deoplete#sources#jedi#statement_length = 50
+" let g:deoplete#sources#jedi#enable_cache = 1
+" let g:deoplete#sources#jedi#show_docstring = 0
 " complete with words from any opened file
-let g:context_filetype#same_filetypes = {}
-let g:context_filetype#same_filetypes._ = '_'
+" let g:context_filetype#same_filetypes = {}
+" let g:context_filetype#same_filetypes._ = '_'
 " TODO make jumping outside project directory work 
 " let g:deoplete#sources#jedi#extra_path = 
 " jedi options
 " Disable autocompletion (using deoplete instead)
-let g:jedi#completions_enabled = 0
+" let g:jedi#completions_enabled = 0
 " Go to definition
-let g:jedi#goto_command = "<Leader>d"
+" let g:jedi#goto_command = "<Leader>d"
 " Find assignments
-let g:jedi#goto_assignments_command = "<Leader>a"
-let g:jedi#documentation_command = "K"
+" let g:jedi#goto_assignments_command = "<Leader>a"
+" let g:jedi#documentation_command = "K"
 " Find ocurrences
-let g:jedi#usages_command = "<Leader>n"
+" let g:jedi#usages_command = "<Leader>n"
 " TODO couldn't make any other combination work
-let g:jedi#completions_command = "<C-N>"
-let g:jedi#rename_command = "<Leader>r"
+" let g:jedi#completions_command = "<C-N>"
+" let g:jedi#rename_command = "<Leader>r"
 " Semshi options
 " let g:semshi#update_delay_factor = 0.0001
 " Overwriting Semshi color highlights for better readability
