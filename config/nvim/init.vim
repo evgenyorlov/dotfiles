@@ -24,6 +24,9 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'Yggdroot/indentLine'
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plug 'sbdchd/neoformat'
 Plug 'dense-analysis/ale'
 
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -34,7 +37,7 @@ Plug 'dense-analysis/ale'
 
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
-" Use TAB for code completion 
+" Use TAB for code completion
 " Plug 'ervandew/supertab'
 
 Plug 'tpope/vim-repeat'
@@ -55,7 +58,7 @@ Plug 'wellle/targets.vim'
 
 Plug 'easymotion/vim-easymotion'
 
-Plug 'chrisbra/NrrwRgn' 
+Plug 'chrisbra/NrrwRgn'
 
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -69,16 +72,12 @@ Plug 'christoomey/vim-tmux-navigator'
 
 " On-demand plugins
 
-" Plug 'ambv/black', {'on': 'Black'}
-" Plug 'fisadev/vim-isort', {'on': 'Isort'}
-
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 " TODO with this plugin NerdTree lags too much!
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on':  'NERDTreeToggle' }
 
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
-
 
 " TODO consider these plugins
 " https://github.com/majutsushi/tagbar
@@ -108,9 +107,9 @@ Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " python2 provider
-let g:python_host_prog = '/Users/eaorlov/.pyenv/versions/neovim2/bin/python'
+let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
 " python3 provider
-let g:python3_host_prog = '/Users/eaorlov/.pyenv/versions/neovim3/bin/python'
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 
 filetype plugin indent on
 
@@ -129,26 +128,6 @@ set termguicolors
 " syntax highlighting
 syntax on
 
-" " solarized scheme options
-" set background=light
-" colorscheme NeoSolarized
-" " default value is "normal", Setting this option to "high" or "low" does use the 
-" " same Solarized palette but simply shifts some values up or down in order to 
-" " expand or compress the tonal range displayed.
-" let g:neosolarized_contrast = "normal"
-" " Special characters such as trailing whitespace, tabs, newlines, when displayed 
-" " using ":set list" can be set to one of three levels depending on your needs. 
-" " Default value is "normal". Provide "high" and "low" options.
-" let g:neosolarized_visibility = "normal"
-" " I make vertSplitBar a transparent background color. If you like the origin solarized vertSplitBar
-" " style more, set this value to 0.
-" let g:neosolarized_vertSplitBgTrans = 1
-" " If you wish to enable/disable NeoSolarized from displaying bold, underlined or italicized 
-" " typefaces, simply assign 1 or 0 to the appropriate variable. Default values:  
-" let g:neosolarized_bold = 1
-" let g:neosolarized_underline = 1
-" let g:neosolarized_italic = 0
-
 " nord color scheme
 let g:nord_italic = 1
 let g:nord_underline = 1
@@ -158,6 +137,7 @@ let g:nord_uniform_diff_background = 1
 " All the options should be set before colorscheme command
 colorscheme nord
 
+" if hidden is not set, TextEdit might fail.
 set hidden
 
 set updatetime=100
@@ -166,6 +146,9 @@ set clipboard=unnamed
 
 " highlight ColorColumn ctermbg=gray
 " set colorcolumn=80
+
+" always show signcolumns
+set signcolumn=yes
 
 " mouse support
 set mouse=a
@@ -180,7 +163,7 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 
-" split settings 
+" split settings
 set splitbelow
 set splitright
 
@@ -190,6 +173,7 @@ set incsearch
 set ignorecase
 set smartcase
 
+
 " keep all undos between vim sessions
 set undofile
 set undodir="$HOME/.VIM_UNDO_FILES"
@@ -197,10 +181,10 @@ set undodir="$HOME/.VIM_UNDO_FILES"
 " Remember cursor position between vim sessions
 if has("autocmd")
     au BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \   exe "normal! g`\"" |
-            \ endif
-            " center buffer around cursor when opening files
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \   exe "normal! g`\"" |
+                \ endif
+    " center buffer around cursor when opening files
 endif
 autocmd BufRead * normal zz
 
@@ -229,25 +213,6 @@ let g:NERDTreeSyntaxEnabledExtensions = ['bmp', 'c', 'h', 'c++', 'cpp', 'ini', '
 "  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
 "  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 " endfunction
-
-" call NERDTreeHighlightFile('jade', 'green', 'none', 'green', )
-" call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-" call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-" call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-" call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-" call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-" call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-" call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', '#151515')
-" call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', '#151515')
-" call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
-" call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
-" call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')
 
 " indent guides options
 let g:indentLine_char = '│'
@@ -304,8 +269,8 @@ let g:startify_change_to_vcs_root = 1
 
 " Fugitive options
 " let g:fugitive_git_executable = 'LANG=ru_RU.UTF-8 git'
-" let g:fugitive_bitbucket_domains = ['http://bitbucket.sberned.ru'] 
-" let g:fugitive_browse_handlers = 
+" let g:fugitive_bitbucket_domains = ['http://bitbucket.sberned.ru']
+" let g:fugitive_browse_handlers =
 
 " GitGutter options
 nmap ]h <Plug>GitGutterNextHunk
@@ -324,23 +289,41 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 "   \ 'include_trailing_comma': 1, 'multi_line_output': 3}
 " let g:vim_isort_python_version = 'python3'
 
+" Neoformat options
+
+" " Enable alignment
+" let g:neoformat_basic_format_align = 1
+" " Enable tab to spaces conversion
+" let g:neoformat_basic_format_retab = 1
+" " Enable trimmming of trailing whitespace
+" let g:neoformat_basic_format_trim = 1
+
+" let g:neoformat_enabled_python = ['docformatter', 'isort', 'black']
+
+" let g:neoformat_run_all_formatters = 1
+
+" let g:neoformat_only_msg_on_error = 1
+
+" " run Neoformat on save
+" augroup fmt
+"   autocmd!
+"   autocmd BufWritePre * undojoin | Neoformat
+" augroup END
+
 " ALE options
-let g:ale_sign_error = '!'
-let g:ale_sign_warning = '?'
-" highlight clear ALEErrorSign
-" highlight clear ALEWarningSign
-" hi link ALEErrorSign base00 
-" hi link ALEWarningSign base00
+" let g:ale_sign_error = '!'
+" let g:ale_sign_warning = '?'
 
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_linters = {'python': ['flake8', 'mypy']}
+" let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+" let g:ale_linters = {'python': []}
 let g:ale_fixers = {
-\   'python': ['black', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['black', 'isort'],
 \}
-nmap ]a <Plug>(ale_next_wrap)
-nmap [a <Plug>(ale_previous_wrap)
+" nmap ]a <Plug>(ale_next_wrap)
+" nmap [a <Plug>(ale_previous_wrap)
 
 
 " Pythonsense options
@@ -395,9 +378,9 @@ xmap gs <plug>(GrepperOperator)
 " let g:grepper.simple_prompt = 1
 " let g:grepper.quickfix      = 0
 command! TODO :Grepper
-      \ -noprompt
-      \ -tool git
-      \ -grepprg git grep -nIi '\(TODO\|FIXME\)'
+            \ -noprompt
+            \ -tool git
+            \ -grepprg git grep -nIi '\(TODO\|FIXME\)'
 
 " disable arrow keys
 no <down> <Nop>
@@ -429,31 +412,14 @@ nnoremap <F4> :set relativenumber!<CR>
 map <leader>` :NERDTreeToggle<CR>
 nnoremap <leader><leader>` :NERDTree .<CR>
 
-" Kite options
-
-" Line-of-Code Completions
-" Tab completion
-let g:kite_tab_complete=1
-" To see documentation in the preview window for each completion option
-" set completeopt+=preview
-" To have the preview window automatically closed once a completion has been inserted
-" utocmd CompleteDone * if !pumvisible() | pclose | endif
-
-" Intelligent Snippets
-let g:kite_next_placeholder = "<C-N>"
-
-" Kite Copilot for Python Documentation
-nmap <silent> <buffer> gK <Plug>(kite-docs)
-" let g:kite_documentation_continual=1
-
-" Statusline
-" set statusline=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
-" set laststatus=2  " always display the status line
-
 " deoplete options
 " let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 0
 " let g:deoplete#enable_ignore_case = 1
 " let g:deoplete#enable_smart_case = 1
+" call deoplete#custom#option('sources', {
+" \ '_': ['ale', 'jedi'],
+" \})
 " let g:deoplete#sources#jedi#server_timeout = 10
 " let g:deoplete#sources#jedi#statement_length = 50
 " let g:deoplete#sources#jedi#enable_cache = 1
@@ -461,8 +427,8 @@ nmap <silent> <buffer> gK <Plug>(kite-docs)
 " complete with words from any opened file
 " let g:context_filetype#same_filetypes = {}
 " let g:context_filetype#same_filetypes._ = '_'
-" TODO make jumping outside project directory work 
-" let g:deoplete#sources#jedi#extra_path = 
+" TODO make jumping outside project directory work
+" let g:deoplete#sources#jedi#extra_path =
 " jedi options
 " Disable autocompletion (using deoplete instead)
 " let g:jedi#completions_enabled = 0
@@ -483,3 +449,125 @@ nmap <silent> <buffer> gK <Plug>(kite-docs)
 "     hi semshiUnresolved      ctermfg=226 guifg=#666600 cterm=underline gui=underline
 " endfunction
 " autocmd FileType python call MyCustomHighlights()
+
+" coc.nvim options
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-TAB> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
