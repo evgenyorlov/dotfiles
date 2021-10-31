@@ -41,9 +41,6 @@
 [format]
     pretty = fuller
 
-[github]
-    user = evgenyorlov
-
 [grep]
     lineNumber = true
 
@@ -72,6 +69,6 @@
     ; autoStash = true
 
 [user]
-    name = Evgeny Orlov
+    name = evgenyorlov
     email = eugene.a.orlov@gmail.com
     ; TODO: Посмотреть про опцию signingkey
