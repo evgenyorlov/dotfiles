@@ -17,7 +17,6 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="${ret_status} "
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
 # LEFT_PROMPT
-# ===========================================================
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon battery ram time status vi_mode newline dir)
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
 POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=' '
@@ -89,7 +88,6 @@ POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='004'
 # POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
 
 # RIGHT_PROMPT
-# ===========================================================
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs virtualenv)
 POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
 POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=' '
@@ -212,10 +210,6 @@ alias zshconfig="nvim ~/.zshrc"
 alias nvimconfig="nvim ~/.config/nvim/init.vim"
 alias tmuxconfig="nvim ~/.tmux.conf"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
-
-# DB 
-alias db_projectx="pgcli -h prx.domclick.ru -p 20000 -U eaorlov -w -d projectx"
-alias db_lcp="pgcli -h central.dev.cloud.vs -p 5456 -U lcp_user -w -d lcp"
 
 # vim
 alias vim="nvim"
